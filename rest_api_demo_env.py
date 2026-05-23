@@ -5,17 +5,24 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-title = input("Введите фильм для поиска: ")
-api_key = os.getenv("OMDB_API_KEY")
+title = input("Введите фильм для поиска: ").strip()
+if not title:
+    print("Название фильма не может быть пустым")
+    exit()
 
+api_key = os.getenv("OMDB_API_KEY")
 if not api_key:
     raise ValueError("Ключ OMDB_API_KEY не найден в .env")
 
-response = requests.get(
-    "http://www.omdbapi.com/",
-    params={"t": title, "apikey": api_key}
-)
-response.raise_for_status()
+try:
+    response = requests.get(
+        "http://www.omdbapi.com/",
+        params={"t": title, "apikey": api_key}
+    )
+    response.raise_for_status()
+except requests.exceptions.RequestException as e:
+    print(f"Ошибка запроса: {e}")
+    exit()
 
 json_data = response.json()
 
