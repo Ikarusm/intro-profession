@@ -40,3 +40,7 @@ else:
     print(f"Жанр: {genre}")
     print(f"Режиссёр: {director}")
     print(f"Рейтинг IMDb: {imdb_rating}")
+
+    actors = json_data.get("Actors")
+    print(f"Актёры: {actors}")
+    print(f"\nФильм '{movie_title}' ({year}) — жанр: {genre}. Режиссёр: {director}.")
